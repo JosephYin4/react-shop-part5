@@ -8,7 +8,7 @@ import RegisterPage from './RegisterPage';
 import { Route, Switch } from 'wouter';
 
 function App() {
-
+return(
 <>
 
 <Navbar />
@@ -24,7 +24,7 @@ function App() {
 </div>
 </footer>
 </>
-
+);
 }
 
 

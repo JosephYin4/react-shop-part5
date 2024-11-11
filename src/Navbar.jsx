@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 
 function Navbar() {
@@ -20,12 +20,12 @@ function Navbar() {
 
     // Cleanup the listener on unmount
     return () => window.removeEventListener('resize', syncNavbarState);
-  }, []);
+  }, [])
 
   const toggleNavbar = () => {
     setNavbarShowing(!isNavbarShowing);
   };
-
+  
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

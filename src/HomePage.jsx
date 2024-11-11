@@ -47,7 +47,7 @@ function HomePage() {
 </div>
 </main>
       </>
-    )
+    );
 }
 
 export default HomePage;
