@@ -1,15 +1,12 @@
 import React from 'react';
 
-const handleAddToCart = () => {
+const ProductCard = (props) => {
+
+  const handleAddToCart = () => {
     alert("Added to Cart!")
   }
 
-
-const ProductCard = (props) => {
   return (
-
-
-
     <div className="card">
       <img
         src={props.imageUrl}
