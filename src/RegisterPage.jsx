@@ -43,14 +43,6 @@ function RegisterPage() {
         }
       };
 
-<Formik
-  initialValues={initialValues}
-  validationSchema={validationSchema}
-  onSubmit={handleSubmit}
->
-  { (formik) => (
-    <Form>
-
   return (
     <div className="container mt-5">
       <h1>Register</h1>
@@ -69,16 +61,19 @@ function RegisterPage() {
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Email</label>
               <input type="email" className="form-control" id="email" autoComplete="username" />
+              {formik.errors.email && formik.touched.email ? <div className="text-danger">{formik.errors.email}</div> : null}
 
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Password</label>
               <input type="password" className="form-control" id="password" autoComplete="new-password" />
+              {formik.errors.password && formik.touched.password ? <div className="text-danger">{formik.errors.password}</div> : null}
  
             </div>
             <div className="mb-3">
               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
               <input type="password" className="form-control" id="confirmPassword" autoComplete="new-password" />
+              {formik.errors.confirmPassword && formik.touched.confirmPassword ? <div className="text-danger">{formik.errors.confirmPassword}</div> : null}
  
             </div>
             <div className="mb-3">
@@ -130,10 +125,7 @@ function RegisterPage() {
             </Formik>
     </div>
   );
+}
 
-</Form>
-  )}
-</Formik>
-  }
 
 export default RegisterPage;
