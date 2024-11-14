@@ -68,17 +68,17 @@ function RegisterPage() {
             </div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" className="form-control" id="email" />
+              <input type="email" className="form-control" id="email" autoComplete="username" />
 
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Password</label>
-              <input type="password" className="form-control" id="password" />
+              <input type="password" className="form-control" id="password" autoComplete="new-password" />
  
             </div>
             <div className="mb-3">
               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-              <input type="password" className="form-control" id="confirmPassword" />
+              <input type="password" className="form-control" id="confirmPassword" autoComplete="new-password" />
  
             </div>
             <div className="mb-3">
