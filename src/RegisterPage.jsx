@@ -29,19 +29,6 @@ function RegisterPage() {
 
   const [, setLocation] = useLocation();
   //const [showSuccess, setShowSuccess] = useState(false);
-  
-  const handleSubmit = async (values, formikHelpers) => {
-    try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, values);
-      console.log('Registration successful:', response.data);
-      setLocation("/");
-      
-    } catch (error) {
-      console.error('Registration failed:', error.response?.data || error.message);
-      // Handle registration error (e.g., show error message)
-    } finally {
-      formikHelpers.setSubmitting(false);}
-
       const handleSubmit = async (values, formikHelpers) => {
         try {
           const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, values);
@@ -55,6 +42,14 @@ function RegisterPage() {
           formikHelpers.setSubmitting(false);
         }
       };
+
+<Formik
+  initialValues={initialValues}
+  validationSchema={validationSchema}
+  onSubmit={handleSubmit}
+>
+  { (formik) => (
+    <Form>
 
   return (
     <div className="container mt-5">
@@ -135,6 +130,10 @@ function RegisterPage() {
             </Formik>
     </div>
   );
-}
-}
+
+</Form>
+  )}
+</Formik>
+  }
+
 export default RegisterPage;
