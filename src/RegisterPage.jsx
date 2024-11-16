@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useLocation } from 'wouter';
 
 function RegisterPage() {
+
+  const [serverError, setServerError] = useState(null);
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
@@ -23,21 +25,24 @@ function RegisterPage() {
     password: '',
     confirmPassword: '',
     salutation: '',
-    marketingPreferences: [],
+    //marketingPreferences: [],
+    emailMarketing: false,  // Boolean for email marketing preference
+    smsMarketing: false,    // Boolean for SMS marketing preference
     country: ''
   };
 
   const [, setLocation] = useLocation();
   //const [showSuccess, setShowSuccess] = useState(false);
   const handleSubmit = async (values, formikHelpers) => {
+    setServerError(null); // Clear any previous errors
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, values);
       console.log('Registration successful:', response.data);
       setLocation("/");
-
     } catch (error) {
       console.error('Registration failed:', error.response?.data || error.message);
       // Handle registration error (e.g., show error message)
+      setServerError(error.response?.data?.msg || 'An error occurred. Please try again.');
     } finally {
       formikHelpers.setSubmitting(false);
     }
@@ -46,6 +51,7 @@ function RegisterPage() {
   return (
     <div className="container mt-5">
       <h1>Register</h1>
+      {serverError && <div className="alert alert-danger">{serverError}</div>}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -138,8 +144,9 @@ function RegisterPage() {
                   className="form-check-input"
                   type="checkbox"
                   id="emailMarketing"
-                  name="marketingPreferences"
-                  value="email"
+                  name="emailMarketing"
+                  checked={formik.values.emailMarketing} // This binds the checkbox state with Formik
+                  onChange={formik.handleChange} // This ensures Formik handles the checkbox change
                 />
                 <label className="form-check-label" htmlFor="emailMarketing">Email Marketing</label>
               </div>
@@ -148,8 +155,9 @@ function RegisterPage() {
                   className="form-check-input"
                   type="checkbox"
                   id="smsMarketing"
-                  name="marketingPreferences"
-                  value="sms"
+                  name="smsMarketing"                 
+                  checked={formik.values.smsMarketing}
+                  onChange={formik.handleChange}
                 />
                 <label className="form-check-label" htmlFor="smsMarketing">SMS Marketing</label>
               </div>
