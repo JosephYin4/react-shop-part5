@@ -1,9 +1,18 @@
 import React from 'react';
+import { useCart } from './CartStore';
+import {useLocation} from 'wouter';
+import { useFlashMessage } from './FlashMessageStore';
 
 const ProductCard = (props) => {
 
-  const handleAddToCart = () => {
-    alert("Added to Cart!")
+  const { addToCart} = useCart();
+  const [, setLocation] = useLocation();
+  const { showMessage } = useFlashMessage();
+
+  const handleAddToCart = () => {    
+    addToCart(props);
+    showMessage('Item added to cart', 'success');
+    setLocation('/cart');
   }
 
   return (
