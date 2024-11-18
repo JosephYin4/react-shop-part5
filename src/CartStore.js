@@ -27,7 +27,18 @@ export const useCart = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
   };
 
+
+
   const addToCart = (product) => {
+
+    const cartProduct = {
+      ...product,
+      product_id: product.id,  // Rename product id to product_id for consistency
+      productName: product.name, // Rename name to productName for consistency
+      imageUrl: product.image,  // Rename image to imageUrl
+      quantity: 1               // Set initial quantity to 1
+    };
+
     setCart((currentCart) => {
       const existingItemIndex = currentCart.findIndex(item => item.product_id === product.id);
       if (existingItemIndex !== -1) {
@@ -36,7 +47,7 @@ export const useCart = () => {
         return currentCart.setIn([existingItemIndex, 'quantity'], currentQuantity + 1);
       } else {
         // Use concat to add a new item immutably
-        return currentCart.concat({ ...product, product_id: product.id, quantity: 1 });
+        return currentCart.concat({cartProduct});
       }
     });
   };
@@ -54,6 +65,12 @@ export const useCart = () => {
         }
 
       }
+    });
+  }
+
+  const removeFromCart = (product_id) => {
+    setCart((currentCart) => {
+      return currentCart.filter(item => item.product_id !== product_id);
     });
   }
 
