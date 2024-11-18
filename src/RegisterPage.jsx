@@ -3,6 +3,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useLocation } from 'wouter';
+import { useFlashMessage } from './FlashMessageStore';
 
 function RegisterPage() {
 
@@ -31,6 +32,9 @@ function RegisterPage() {
     country: ''
   };
 
+  // Put this after the other hooks at the top of `RegisterPage.jsx`
+  const { showMessage } = useFlashMessage();
+
   const [, setLocation] = useLocation();
   //const [showSuccess, setShowSuccess] = useState(false);
   const handleSubmit = async (values, formikHelpers) => {
@@ -38,11 +42,13 @@ function RegisterPage() {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, values);
       console.log('Registration successful:', response.data);
+      showMessage('Registration successful!', 'success');
       setLocation("/");
     } catch (error) {
       console.error('Registration failed:', error.response?.data || error.message);
       // Handle registration error (e.g., show error message)
       setServerError(error.response?.data?.msg || 'An error occurred. Please try again.');
+      showMessage('Registration failed. Please try again.', 'error');
     } finally {
       formikHelpers.setSubmitting(false);
     }
@@ -155,7 +161,7 @@ function RegisterPage() {
                   className="form-check-input"
                   type="checkbox"
                   id="smsMarketing"
-                  name="smsMarketing"                 
+                  name="smsMarketing"
                   checked={formik.values.smsMarketing}
                   onChange={formik.handleChange}
                 />
