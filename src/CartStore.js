@@ -13,8 +13,8 @@ const initialCart = Immutable([
         "price": 12.99,
         "imageUrl": "https://picsum.photos/id/225/300/200",
         "description": "Premium organic green tea leaves, rich in antioxidants and offering a smooth, refreshing taste."
-    }
-])
+    },
+]);
 // Create an atom for the cart
 export const cartAtom = atom(initialCart);
 
@@ -30,14 +30,19 @@ export const useCart = () => {
 
 
   const addToCart = (product) => {
+    setCart((currentCart) => {
+      const existingItemIndex = currentCart.findIndex(item => item.product_id === product.id);
+      if (existingItemIndex !== -1) {
+        // Use setIn to update quantity immutably
+        const currentQuantity = currentCart[existingItemIndex].quantity;
+        return currentCart.setIn([existingItemIndex, 'quantity'], currentQuantity + 1);
+      } else {
+        // Use concat to add a new item immutably
+        return currentCart.concat({ ...product, product_id: product.id, quantity: 1 });
+      }
+    });
+  
 
-    const cartProduct = {
-      ...product,
-      product_id: product.id,  // Rename product id to product_id for consistency
-      productName: product.name, // Rename name to productName for consistency
-      imageUrl: product.image,  // Rename image to imageUrl
-      quantity: 1               // Set initial quantity to 1
-    };
 
     setCart((currentCart) => {
       const existingItemIndex = currentCart.findIndex(item => item.product_id === product.id);
