@@ -2,7 +2,7 @@ import React from 'react';
 import { useCart } from './CartStore';
 
 const ShoppingCart = () => {
-  const { cart, getCartTotal, modifyQuantity } = useCart();
+  const { cart, getCartTotal, modifyQuantity, removeFromCart } = useCart();
 
   return (
     <div className="container mt-4">
