@@ -7,6 +7,7 @@ import { Route, Switch } from 'wouter';
 import { useFlashMessage } from './FlashMessageStore';
 import './index.css';
 import ShoppingCart from './ShoppingCart';
+import UserLogin from "./UserLogin";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/" component={HomePage} />
         <Route path="/products" component={ProductPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/login" component={UserLogin} />
         <Route path="/cart" component={ShoppingCart} />
       </Switch>
       <footer className="bg-dark text-white text-center py-3">
