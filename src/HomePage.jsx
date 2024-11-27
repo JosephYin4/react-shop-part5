@@ -10,6 +10,7 @@ function HomePage() {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
         setFeaturedProducts(response.data); // Assuming the response data is an array of products
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching featured products:', error);
       }
@@ -29,7 +30,9 @@ function HomePage() {
           // description={product.description}
           // category={product.category}
         />
+
       </div>
+      
     ));
   };
 
