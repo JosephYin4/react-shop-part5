@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
+
 import { useCart } from './CartStore';
 import { useJwt } from './UserStore';
 import axios from 'axios';
 
 const ShoppingCart = () => {
-  const { cart, getCartTotal, modifyQuantity, removeFromCart } = useCart();
+  const { cart, getCartTotal, modifyQuantity, removeFromCart, setCartContent } = useCart();
   const { getJwt } = useJwt();
   const [isUpdating, setIsUpdating] = useState(false);
   const isFirstRender = useRef(true); // Track first render
 
   const fetchCart = async () => {
     const jwt = getJwt();
+    console.log(jwt);
     try {
       const response = await axios.get(import.meta.env.VITE_API_URL + '/api/cart', {
         headers: {
@@ -32,6 +34,7 @@ const ShoppingCart = () => {
   const updateCart = async () => {
     setIsUpdating(true);
     const jwt = getJwt();
+    console.log(jwt);
     try {
       const updatedCart = cart.map((item) => ({
         product_id: item.product_id,
